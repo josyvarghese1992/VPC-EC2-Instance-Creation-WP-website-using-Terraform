@@ -45,7 +45,7 @@ $ terraform plan
 $ terraform apply
 ~~~
 
-## terraform state list
+## Terraform state list
 
 ~~~
 ec2-user@ip-172-31-6-147 ~/aws-vpc-secure-project-ec2_pending (default)$ terraform state list
