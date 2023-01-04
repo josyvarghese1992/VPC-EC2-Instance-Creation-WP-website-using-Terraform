@@ -33,7 +33,7 @@ We are establishing a NAT gateway to facilitate internet traffic to private subn
 ## Use git clone to download the project files to your local system for execution
 
 ~~~
-https://github.com/josyvarghese1992/VPC-EC2-Instance-Creation-WP-website-using-Terraform.git
+git clone https://github.com/josyvarghese1992/VPC-EC2-Instance-Creation-WP-website-using-Terraform.git
 ~~~
 
 ## Deploy the infrastructure using Terraform
