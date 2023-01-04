@@ -5,11 +5,11 @@ The goal of this project is to show users how to use Terraform to instal and hos
 
 ## Prerequisite
 
->>> IAM user with programmatic access and AmazonEc2FullAccess, AmazonVPCFullAccess  &  AmazonRoute53FullAccess
+- IAM user with programmatic access and AmazonEc2FullAccess, AmazonVPCFullAccess  &  AmazonRoute53FullAccess
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
 
 
->>> Machine with latest version of git and terraform installed
+- Machine with latest version of git and terraform installed
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## Terraform AWS provider setup
