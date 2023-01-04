@@ -5,11 +5,11 @@ The goal of this project is to show users how to use Terraform to instal and hos
 
 ## Prerequisite
 
-> IAM user with programmatic access and AmazonEc2FullAccess, AmazonVPCFullAccess  &  AmazonRoute53FullAccess
+>>> IAM user with programmatic access and AmazonEc2FullAccess, AmazonVPCFullAccess  &  AmazonRoute53FullAccess
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
 
 
-> Machine with latest version of git and terraform installed
+>>> Machine with latest version of git and terraform installed
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## Terraform AWS provider setup
@@ -20,10 +20,10 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
 [ec2-user@ip-172-31-6-147 ~]$ unzip terraform_1.3.6_linux_amd64.zip
 [ec2-user@ip-172-31-6-147 ~]$ sudo mv terraform /usr/local/bin/
 [ec2-user@ip-172-31-6-147 ~]$ rm -rf terraform_1.3.6_linux_amd64.zip
-[ec2-user@ip-172-31-6-147 ~]$ mkdir aws-vpc-project
-[ec2-user@ip-172-31-6-147 ~]$ touch aws-vpc-project/{provider.tf,variables.tf,main.tf,output.tf,datasource.tf}
-[ec2-user@ip-172-31-6-147 aws-vpc-project]$ ssh-keygen
-[ec2-user@ip-172-31-6-147 aws-vpc-project]$ terraform init
+[ec2-user@ip-172-31-6-147 ~]$ mkdir VPC-EC2-Instance-Creation-WP-website-using-Terraform
+[ec2-user@ip-172-31-6-147 ~]$ touch VPC-EC2-Instance-Creation-WP-website-using-Terraform/{provider.tf,variables.tf,main.tf,output.tf,datasource.tf}
+[ec2-user@ip-172-31-6-147 VPC-EC2-Instance-Creation-WP-website-using-Terraform]$ ssh-keygen
+[ec2-user@ip-172-31-6-147 VPC-EC2-Instance-Creation-WP-website-using-Terraform]$ terraform init
 ~~~
 
 Here establishing a VPC with CIDR 172.16.0.0/16 and hosting a WordPress website. 3 public and 1 private subnet are formed within the VPC. Additionally, by changing the map public IP on the launch parameter to true, public IP was made available for instances launched in the public subnet.Our database EC2 server is located in a private subnet inside the VPC, but the web server EC2 and bastion server EC2 instances were established in a public subnet. IGW and NATGW provide connectivity to the internet for the entire VPC. Here, we have public subnets that are connected to the IGW. The NAT gateway is connected to private subnets.
@@ -35,12 +35,14 @@ As I have already mentioned about the 3 instances, We are enabling HTTP and HTTP
 
 We are establishing a NAT gateway to facilitate internet traffic to private subnets, and in order to set up the NAT gateway, you must first purchase an EIP (elastic IP address).The VPC has two route tables, Private subnets are connected to private route, and all public subnets are connected to public-route table of the VPC  For the instances, we've defined three security groups. Additionally, we use two Route 53 zones within of our VPC. The private zone is configured to handle connections between the webserver and database server. Please be aware that DNS resolution for private subnet records only occurs inside the VPC. The domain URL is configured using the already-existing public zone, which is accessed through the data source.
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## Deploy the infrastructure using Terraform
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+Use git clone to download the project files to your local system for execution
+https://github.com/josyvarghese1992/VPC-EC2-Instance-Creation-WP-website-using-Terraform.git
 
-$ cd  aws-terraform-wordpress
+$ cd  VPC-EC2-Instance-Creation-WP-website-using-Terraform
 $ terraform validate
 $ terraform plan
 $ terraform apply
