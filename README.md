@@ -2,18 +2,14 @@
 
 The goal of this project is to show users how to use Terraform to instal and host a WordPress application in AWS. Here is a list of all the Amazon EC2 instances that were utilised for this project. The database is managed by a separate Ec2 instance, while the frontend of the website CMS is housed on a separate Ec2 instance. Additionally, since the database was built within a private subnet, direct ssh access to this database server is prohibited. Only a third Ec2 instance known as a Bastion server will allow for public SSH access to either of these instances. The front-end server can handle HTTP and HTTPS connections from internet.
 
-
 ## Prerequisite
 
 - IAM user with programmatic access and AmazonEc2FullAccess, AmazonVPCFullAccess  &  AmazonRoute53FullAccess
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
 
-
 - Machine with latest version of git and terraform installed
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## Terraform AWS provider setup
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ~~~
 [ec2-user@ip-172-31-6-147 ~]$ wget https://releases.hashicorp.com/terraform/1.3.6/terraform_1.3.6_linux_amd64.zip
@@ -32,28 +28,27 @@ A created keypair connects every instance in the VPC. SSH-Keygen is used to crea
 
 As I have already mentioned about the 3 instances, We are enabling HTTP and HTTPS traffic from everywhere and SSH access only from the bastion server traffic on the webserver EC2. This was done by creating a security group that is attached to the instance. The security group rules are used to permit MySQL access only from website and SSH access only from bastion server for the database server. All of the instances are running Amazon Linux's AMI (T2.Micro). We have made a separate SSH access rule by adding a security group because the bastion server can be accessed from anywhere. If your IP address is static, you can include that only in the security group rule of bastion server. Using the "depends on" parameter, we place a dependent on NAT gateway while configuring the backend instance. Therefore, the backend instance won't create until the NAT gateway is operational.
 
-
 We are establishing a NAT gateway to facilitate internet traffic to private subnets, and in order to set up the NAT gateway, you must first purchase an EIP (elastic IP address).The VPC has two route tables, Private subnets are connected to private route, and all public subnets are connected to public-route table of the VPC  For the instances, we've defined three security groups. Additionally, we use two Route 53 zones within of our VPC. The private zone is configured to handle connections between the webserver and database server. Please be aware that DNS resolution for private subnet records only occurs inside the VPC. The domain URL is configured using the already-existing public zone, which is accessed through the data source.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## Deploy the infrastructure using Terraform
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## Use git clone to download the project files to your local system for execution
 
-Use git clone to download the project files to your local system for execution
+~~~
 https://github.com/josyvarghese1992/VPC-EC2-Instance-Creation-WP-website-using-Terraform.git
+~~~
 
+## Deploy the infrastructure using Terraform
+
+~~~
 $ cd  VPC-EC2-Instance-Creation-WP-website-using-Terraform
 $ terraform validate
 $ terraform plan
 $ terraform apply
+~~~
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## terraform state list
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ~~~
 ec2-user@ip-172-31-6-147 ~/aws-vpc-secure-project-ec2_pending (default)$ terraform state list
-
 
 data.aws_availability_zones.available
 data.aws_route53_zone.mydomain
